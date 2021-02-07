@@ -1,2 +1,2 @@
-# faceapi
+# faceAPI
 顔API陽
