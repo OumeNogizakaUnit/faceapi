@@ -34,13 +34,10 @@ def predict(imagefile: Path) -> List[List[Result]]:
     for _result_one_face in _result_all_face:
         result_list: List[Result] = []
         for member, rate in zip(categories, _result_one_face):
-            print(member, rate)
             result: Result = {"name": member,
                               "matchrate": round(rate*100, 2)}
             result_list.append(result)
         all_result_list.append(result_list)
-    print(f"face_locations is {face_locations}")
-    print(f"all_result_list is {all_result_list}")
     return all_result_list
 
 

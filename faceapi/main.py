@@ -4,9 +4,23 @@ from fastapi import FastAPI, File, UploadFile
 from faceapi import __name__ as name
 from faceapi.utils import (save_temp_file,
                            predict)
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -29,6 +43,8 @@ def image_predict(
 
     '''
     filepath = save_temp_file(file)
+    print(filepath)
     locations = predict(filepath)
-    print(locations)
-    return {"type1": locations}
+    res = {"type1": locations}
+    print(res)
+    return res
