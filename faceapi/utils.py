@@ -1,11 +1,12 @@
 import csv
-import shutil
 import pickle
-import face_recognition  # type: ignore
-from typing import List, TypedDict
+import shutil
 from pathlib import Path
-from fastapi import UploadFile
 from tempfile import NamedTemporaryFile
+from typing import List, NamedTuple, TypedDict
+
+import face_recognition  # type: ignore
+from fastapi import UploadFile
 from sklearn.svm import SVC  # type: ignore
 
 from faceapi import MODEL_DIR
@@ -14,9 +15,23 @@ modelpath = Path(MODEL_DIR, 'rikaorother.sav')
 memberlist = Path(MODEL_DIR, 'rikaorother.csv')
 
 
+class FaceLocation(NamedTuple):
+    x1: int
+    y1: int
+    x2: int
+    y2: int
+
+
 class Result(TypedDict):
     name: str
     matchrate: float
+
+
+def find_face(imagefile: Path) -> List[FaceLocation]:
+    imagedata = face_recognition.load_image_file(imagefile)
+    face_locations: List[FaceLocation] = face_recognition.face_locations(
+        imagedata)
+    return face_locations
 
 
 def predict(imagefile: Path) -> List[List[Result]]:

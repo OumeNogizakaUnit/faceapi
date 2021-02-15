@@ -18,10 +18,22 @@ scikit-learn = "^0.24.1"
 poethepoet = "^0.9.0"
 mypy = "^0.800"
 flake8 = "^3.8.4"
+autopep8 = "^1.5.5"
+autoflake = "^1.4"
+isort = {extras = ["pyproject"], version = "^5.7.0"}
 
 [tool.poe.tasks]
 runserver = "uvicorn faceapi.main:app --reload"
-lint = {shell = "flake8 faceapi/; mypy faceapi/"}
+lint = {shell = """
+flake8 faceapi/ --max-line-length 100
+mypy faceapi/
+"""}
+format = {shell = """
+autopep8 -ir faceapi/
+autoflake -ir --expand-star-imports --remove-all-unused-imports \
+--ignore-init-module-imports --remove-duplicate-keys --remove-unused-variables faceapi/
+isort faceapi/
+"""}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
