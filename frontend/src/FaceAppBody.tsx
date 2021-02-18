@@ -37,7 +37,7 @@ class FaceInputForm extends React.Component<{}, IState> {
     const fd = new FormData();
     fd.append("file", this.state.image_data);
     fd.append("modelid", "0");
-    const request_url: string = "http://localhost:8000/api/v1/recognition";
+    const request_url: string = "http://localhost:8000/api/v1/locations";
     axios.post(request_url, fd, {
     }).then((responce) => {
       console.log(responce)

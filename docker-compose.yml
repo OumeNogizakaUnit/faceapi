@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: "faceapi-frontend"
+    hostname: "frontend"
+    build:
+      context: .
+      dockerfile: ./docker/frontend.Dockerfile
+    environment:
+      WORKDIR: /srv
+    networks:
+      - faceapi-network
+    volumes:
+      - "./frontend/tsconfig.json:/srv/tsconfig.json:ro"
+      - "./frontend/src:/srv/src:ro"
+      - "./frontend/public:/srv/public:ro"
+    ports:
+      - "3000:3000"
+  faceapi:
+    container_name: "faceapi"
+    hostname: "faceapi"
+    build:
+      context: .
+      dockerfile: ./docker/faceapi.Dockerfile
+    networks:
+      - faceapi-network
+    environment:
+      WORKDIR: /srv
+    volumes:
+      - "./pyproject.toml:/srv/pyproject.toml:ro"
+      - "./faceapi:/srv/faceapi:ro"
+      - "./models:/srv/models:rw"
+      - "venv:/srv/.venv:rw"
+    ports:
+      - "8000:8000"
+volumes:
+  node-modules:
+  venv:
+
+networks:
+  faceapi-network:

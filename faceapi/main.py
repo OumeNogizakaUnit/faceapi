@@ -9,7 +9,6 @@ from faceapi.utils import find_face, predict, save_temp_file
 app = FastAPI()
 
 origins = [
-    "http://localhost",
     "http://localhost:3000",
 ]
 
