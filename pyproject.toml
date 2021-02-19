@@ -13,6 +13,7 @@ uvicorn = "^0.13.3"
 python-multipart = "^0.0.5"
 face-recognition = "^1.3.0"
 scikit-learn = "^0.24.1"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 poethepoet = "^0.9.0"
@@ -21,19 +22,22 @@ flake8 = "^3.8.4"
 autopep8 = "^1.5.5"
 autoflake = "^1.4"
 isort = {extras = ["pyproject"], version = "^5.7.0"}
+pytest = "^6.2.2"
 
 [tool.poe.tasks]
 runserver = "uvicorn --host 0.0.0.0 --port 8000 --log-level debug --reload faceapi.main:app"
-lint = {shell = """
+test = "python -m pytest tests/"
+[tool.poe.tasks.lint]
+shell = """
 flake8 faceapi/ --max-line-length 100
-mypy faceapi/
-"""}
-format = {shell = """
+mypy faceapi/ """
+[tool.poe.tasks.format]
+shell = """
 autopep8 -ir faceapi/
 autoflake -ir --expand-star-imports --remove-all-unused-imports \
 --ignore-init-module-imports --remove-duplicate-keys --remove-unused-variables faceapi/
 isort faceapi/
-"""}
+"""
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
