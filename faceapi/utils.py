@@ -3,28 +3,17 @@ import pickle
 import shutil
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import List, NamedTuple, TypedDict
+from typing import List
 
 import face_recognition  # type: ignore
 from fastapi import UploadFile
 from sklearn.svm import SVC  # type: ignore
 
 from faceapi import MODEL_DIR
+from faceapi.schema import FaceLocation, Result
 
 modelpath = Path(MODEL_DIR, 'rikaorother.sav')
 memberlist = Path(MODEL_DIR, 'rikaorother.csv')
-
-
-class FaceLocation(NamedTuple):
-    x1: int
-    y1: int
-    x2: int
-    y2: int
-
-
-class Result(TypedDict):
-    name: str
-    matchrate: float
 
 
 def find_face(imagefile: Path) -> List[FaceLocation]:
@@ -80,3 +69,14 @@ def save_temp_file(uploadfile: UploadFile) -> Path:
     finally:
         uploadfile.file.close()
     return tmp_path
+
+
+def save_model_file(uploadfile: UploadFile) -> Path:
+    suffix = Path(uploadfile.filename).suffix
+    try:
+        with NamedTemporaryFile(delete=False, dir=MODEL_DIR, suffix=suffix) as fd:
+            shutil.copyfileobj(uploadfile.file, fd)
+            model_path = Path(fd.name)
+    finally:
+        uploadfile.file.close()
+    return model_path

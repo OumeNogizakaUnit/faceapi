@@ -14,6 +14,7 @@ python-multipart = "^0.0.5"
 face-recognition = "^1.3.0"
 scikit-learn = "^0.24.1"
 requests = "^2.25.1"
+SQLAlchemy = "^1.3.23"
 
 [tool.poetry.dev-dependencies]
 poethepoet = "^0.9.0"
@@ -23,14 +24,16 @@ autopep8 = "^1.5.5"
 autoflake = "^1.4"
 isort = {extras = ["pyproject"], version = "^5.7.0"}
 pytest = "^6.2.2"
+sqlalchemy-stubs = "^0.4"
 
 [tool.poe.tasks]
 runserver = "uvicorn --host 0.0.0.0 --port 8000 --log-level debug --reload faceapi.main:app"
+migrate = "python -c 'from faceapi.backend.models import init_database; init_database()'"
 test = "python -m pytest tests/"
 [tool.poe.tasks.lint]
 shell = """
 flake8 faceapi/ --max-line-length 100
-mypy faceapi/ """
+mypy faceapi/ --config-file mypy.ini"""
 [tool.poe.tasks.format]
 shell = """
 autopep8 -ir faceapi/

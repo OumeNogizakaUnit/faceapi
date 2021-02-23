@@ -13,7 +13,10 @@ COPY ./pyproject.toml /srv/pyproject.toml
 COPY ./poetry.lock /srv/poetry.lock
 RUN poetry install
 
+COPY ./docker/run-faceapi.sh /
+
+
 EXPOSE 8000
 
 ENTRYPOINT []
-CMD ["poetry", "run", "poe", "runserver"]
+CMD ["/run-faceapi.sh"]
