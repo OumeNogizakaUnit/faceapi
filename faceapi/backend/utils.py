@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from faceapi.schema import CreateModel
 from faceapi.backend.models import Model, memberlist2str
+from faceapi.schema import CreateModel
 
 
 def create_model(db: Session, model: CreateModel):

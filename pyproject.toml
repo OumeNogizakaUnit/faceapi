@@ -30,12 +30,10 @@ sqlalchemy-stubs = "^0.4"
 runserver = "uvicorn --host 0.0.0.0 --port 8000 --log-level debug --reload faceapi.main:app"
 migrate = "python -c 'from faceapi.backend.models import init_database; init_database()'"
 test = "python -m pytest tests/"
-[tool.poe.tasks.lint]
-shell = """
+lint.shell = """
 flake8 faceapi/ --max-line-length 100
 mypy faceapi/ --config-file mypy.ini"""
-[tool.poe.tasks.format]
-shell = """
+format.shell = """
 autopep8 -ir faceapi/
 autoflake -ir --expand-star-imports --remove-all-unused-imports \
 --ignore-init-module-imports --remove-duplicate-keys --remove-unused-variables faceapi/
