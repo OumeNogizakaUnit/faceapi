@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:14
 LABEL maintainer="mypaceshun@gmail.com"
 
 WORKDIR /srv

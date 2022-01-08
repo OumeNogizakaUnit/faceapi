@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.9
 LABEL maintainer="mypaceshun@gmail.com"
 
 WORKDIR /srv
@@ -6,6 +6,7 @@ WORKDIR /srv
 RUN apt update -y
 RUN apt upgrade -y
 RUN apt install -y cmake
+RUN apt install -y python3-dev
 RUN python3 -m pip install poetry
 RUN poetry config virtualenvs.in-project true
 
