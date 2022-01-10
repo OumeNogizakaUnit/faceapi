@@ -22,9 +22,9 @@ mypy = "^0.800"
 flake8 = "^3.8.4"
 autopep8 = "^1.5.5"
 autoflake = "^1.4"
-isort = {extras = ["pyproject"], version = "^5.7.0"}
 pytest = "^6.2.2"
 sqlalchemy-stubs = "^0.4"
+isort = "^5.10.1"
 
 [tool.poe.tasks]
 runserver = "uvicorn --host 0.0.0.0 --port 8000 --log-level debug --reload faceapi.main:app"

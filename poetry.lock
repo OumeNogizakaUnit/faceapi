@@ -561,7 +561,7 @@ standard = ["websockets (>=8.0.0,<9.0.0)", "watchgod (>=0.6)", "python-dotenv (>
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "bcb4a12fa6e1623a282736c811fb34cc0b56fa025267593b9c55f2e62bd3a535"
+content-hash = "1747abd52829400ac139dff97d170e9f03d360e7d3a76c588ef3b07f55a4ead7"
 
 [metadata.files]
 atomicwrites = [
